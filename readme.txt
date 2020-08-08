@@ -1,13 +1,13 @@
-TO COMPILE
+TO COMPILE:
 
 1. mkdir catkin_ws
 2. cd catkin_ws
 3. extract the src folder remove the zip file
 
-To catch any depdencies, I am not sure i have included all the depdencies but i think So
+To include depdencies:
 4. rosdep install --from-paths src --ignore-src -r -y
 
-You may want to Run just to be sure 
+You may want to run just to be sure:
 4.a. sudo apt-get install ros-melodic-ros-control ros-melodic-ros-controllers
 
 5. catkin_make && source devel/setup.bash
@@ -53,43 +53,31 @@ Now you can run e.g
 rosrun arm_bringup pos_exec.py  (For the arm to go to a list of positions consecutevily)
 rosrun arm_bringup set_start_pos.py
 
-P.S I Also try to make a this file which you can run by
+P.S I also tried to make this file which you can run by:
 
 rosrun arm_bringup moveit_command.py
-
-Which supposedly will add a ground and a box to the planning scene so moveit can avoid it during planning
-but i don't know why it doesn't work and i am bored to make the moveit c++ api which i have tested to work P
-
-You can see on my project a package pick_place which uses the moveit c++ api with a service server
-e.g recieves the object 3d pos from a client and performs a pick and place, study it to c++ moveit api
-and how to use header and cpp files, alongside services, how to add boxes etc
 
 SEE THE MOVEIT TUTORIALS
 
 ARDUINO
 
-The transform node will transform the joint_States into the servo_cmd topic
-you can do 
+The transform node will transform the joint_states into the servo_cmd topic
+you can do: 
 rostopic echo servo_cmd
-or if you want to manually publish to the arduino something like this
+or if you want to manually publish to the arduino something like this:
 rostopic pub servo_cmd std_msgs/Int16MultiArray "{layout: {dim: [{label: '', size: 4, stride: 4}], data_offset: 0}, data: [90,90,90,90]}"
 
-I didnt find the need to run the set_start_pos, since the arm starts horizontal
-BE CAREFULL!! When rosserial starts the arm will violently go to the horizontal position!!!!
+I didnt find the need to run the set_start_pos, since the arm starts vertical
+BE CAREFULL!! When rosserial starts the arm will violently go to the vertical position!!!!
 I wasn't sure about the direction of plat_joint (i have made a comment in the transform how to reverse direction) 
 
 
 GENERAL COMMENTS
 
-I change the transmitions from effort to position
-One urdf for real one for sim
-On the moveit_config - setup_assistant on ros control click auto add follow traj controller (i put your name and email there)
-Study this workspace very good -> see the transform node at arm_bringup/src/pub_to_arduino_class.cpp , the arduino code, the scripts,
-the launch files , the CMake files etc..
-
-Files with the prefix TEMPLATE are just for you to look at
-
-Cheers!
-
+I changed the transmitions from effort to position.
+One urdf for real one for sim.
+On the moveit_config - setup_assistant on ros control click auto add follow traj controller
+Study this workspace very well -> see the transform node at arm_bringup/src/pub_to_arduino_class.cpp , the arduino code, the scripts,
+the launch files , the CMake files etc...
 
 
